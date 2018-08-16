@@ -1,23 +1,30 @@
 const config = {
-    entry: './index.js', // entry point
+    entry: './src/index.js',
     output: {
-        filename: './public/index.js', // place where bundled app will be served
+        filename: './public/index.js',
     },
+    mode: "development",
     devServer: {
         contentBase: ['./public/', './src/'],
-        inline: true, // autorefresh
-        port: 8080 // development port server
+        inline: true, 
+        port: 8080 
     },
     module: {
         rules: [{
-            test: /\.jsx?$/, // search for js files 
-            exclude: /node_modules/,
+            enforce: 'pre',
+            test: /\.js?$/,
+            exclude: /node_module/,
             loader: 'babel-loader',
             query: {
-                presets: ['es2015', 'react'] // use es2015 and react
+              presets: ['es2016', 'react']
             }
-        }]
-    }
+          },{
+            test: /\.css$/,
+            use: [ 'style-loader', 'css-loader' ]
+          }]
+    },
+    devtool: 'source-map'
+
 }
 
 module.exports = config;

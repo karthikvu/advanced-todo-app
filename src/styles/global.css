@@ -1,0 +1,40 @@
+.header {
+    height: 60px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: rgb(143, 206, 140)
+} 
+
+.m-t-header {
+    margin-top: 60px;
+}
+
+.m-bt-10 {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.p-t-50 {
+    padding-top: 50px 
+}
+/* Login page */
+.login {
+    background-color: #f9f9f9;
+}
+.box {
+    width: 30vw;
+    /* height: 50vh; */
+    min-width: 300px;
+    
+    /* border: 1px solid; */
+}
+
+.flex-center {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
