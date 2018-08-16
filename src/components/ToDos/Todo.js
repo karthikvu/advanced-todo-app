@@ -14,6 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DoneIcon from '@material-ui/icons/Done';
 
 class ToDo extends Component {
     constructor(props) {
@@ -32,6 +33,7 @@ class ToDo extends Component {
     handleClick( event) {
         this.setState({ anchorEl: event.currentTarget });
     };
+
     render() { 
         const { todo, isManager, demo } = this.props;
         const { anchorEl } = this.state;
@@ -64,7 +66,9 @@ class ToDo extends Component {
                                     <ListItemText>Edit</ListItemText>
                             </MenuItem>
                                 </Link>
-                            <MenuItem onClick={this.handleClose}>
+                            <MenuItem 
+                                onClick={() => {this.props.deleteTodo(todo),this.handleClose()}}
+                                >
                                     <ListItemIcon>
                                         <DeleteIcon />
                                     </ListItemIcon>
@@ -79,8 +83,11 @@ class ToDo extends Component {
                             </Typography>
                         </CardContent>
                         <CardActions className="text-center">
-                            {(demo || !isManager ) && <Button variant="outlined">
+                            {(demo || !isManager ) && todo.status == 0 && <Button variant="outlined" onClick={(e) => this.props.updateToDo({...todo, status: 1})}>
                                 Mark as Done
+                            </Button>}
+                            {todo.status == 1 && <Button disabled variant="contained" style={{ backgroundColor: "#009688", color: "white" }}>
+                               <DoneIcon style={{ marginRight: 10, fontSize: 20}}/> Completed
                             </Button>}
                         </CardActions>
                </Card>

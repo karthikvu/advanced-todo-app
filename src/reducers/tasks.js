@@ -19,27 +19,56 @@ const initialTasks = {
         id:"3248623",
         title: "Something else !",
         description : "Something Else,Something Else Something Else Something Else Something Else Something Else",
-        status: 0
+        status: 1
     }
 ]
 }
 
 const tasks = (state = initialTasks, action) => {
     switch (action.type) {
-        case "LOGIN":
+        case "ADD": {
+            let task = action.payload;
+            let tasks = state.todos;
+            tasks.unshift(task);
             return {
                 ...state,
-                user: action.payload
+                todos: tasks
             }
             break;
+        }
 
-        case "LOGOUT":
+        case "UPDATE": {
+            let task = action.payload;
+            let tasks = state.todos;
+            for(let i = 0; i < tasks.length; i++ ){
+                if(tasks[i]["id"] == task.id){
+                    tasks[i] = task;
+                    break;
+                }
+            }
             return {
                 ...state,
-                user: null
+                todos: tasks
             }
             break;
-
+        }
+        case "DELETE":{ 
+            let task = action.payload;
+            let tasks = state.todos;
+            let index;
+            for(let i = 0; i < tasks.length; i++ ){
+                if(tasks[i]["id"] == task.id){
+                    index = i;
+                    break;
+                }
+            }
+            tasks.splice(index, 1);
+            return {
+                ...state,
+                todos: tasks
+            }
+            break;
+        }
         default:
             return {
                 ...state,

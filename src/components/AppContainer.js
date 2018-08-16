@@ -13,11 +13,7 @@ class AppContainer extends Component {
         return (
             <div>
                <div className="header">
-               <ul>
-                  <li><Link to={'/'}>Home</Link></li>
-                  <li><Link to={'/create'}>create</Link></li>
-                  <li><Link to={'/edit'}>Edit</Link></li>
-               </ul></div> 
+               </div> 
                <div className="container m-t-header">
                {/* <Switch>
                     <Route exact path='/' component={AddEditTodo}/>
