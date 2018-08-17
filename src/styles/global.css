@@ -14,7 +14,14 @@ body {
 } 
 .todo-container {
     padding-top: 15px;
-    height: 100%;
+}
+
+.no-data {
+    height: 150px;
+    width: 100%;
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+    padding: 50px;
 }
 .m-t-header {
     margin-top: 60px;

@@ -1,9 +1,5 @@
 const initialSession = {
-    user:  {
-        username: "manager",
-        password: "manager",
-        role: "manager"
-    },
+    user:  null,
     message: null
 
 }

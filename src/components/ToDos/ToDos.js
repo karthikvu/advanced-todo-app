@@ -9,6 +9,8 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { Link , withRouter } from "react-router-dom";
 
 
+
+
 import { updateTask, deleteTask } from "../../actions/taskActions";
 class ToDoList extends Component {
     constructor(props) {
@@ -30,7 +32,10 @@ class ToDoList extends Component {
         this.props.updateTask(todo);
     }
     deleteTodo = (todo) => {
-        this.props.deleteTask(todo);
+        // this.setState({
+        //     dialogOpen: true
+        // })
+       this.props.deleteTask(todo);
     }
     setFilter = filter => event => {
         this.setState({
@@ -38,6 +43,10 @@ class ToDoList extends Component {
         })
         this.handleClose();
     } 
+
+    
+
+
     render() {
         const {todos, session} = this.props;
         const {anchorEl, filter} = this.state;
@@ -56,8 +65,9 @@ class ToDoList extends Component {
                             ? 'simple-menu'
                             : null}
                             aria-haspopup="true"
-                            variant="outlined"
+                            variant={filter == "0,1" ? "outlined" : "contained"}
                             //the material components are not aligned
+                            color={filter == "0,1" ? "primary" : "secondary"}
                             style={{marginTop: 4}}
                             onClick={this.handleClick}>
                             <FilterListIcon style={{ marginRight: 10, fontSize: 20}} />
@@ -83,7 +93,9 @@ class ToDoList extends Component {
                             updateToDo={this.updateToDo}
                             deleteTodo={this.deleteTodo}/>
                     </div>)}
+                    {filtered.length == 0 && <div className="col-12 no-data text-center">No Todos. {filter != "0,1" && <div>Try changing filter selection</div>} </div>}
                 </div>
+                
             </div>
         );
     }
