@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import { Link } from "react-router-dom";
+import { Link , withRouter } from "react-router-dom";
 
 import { connect } from "react-redux";
 import Todo from "../ToDos/Todo";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { updateTask, addTask } from "../../actions/taskActions";
 
 class AddEditTodo    extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class AddEditTodo    extends Component {
         this.state = {
             todo: {
                 title: "Add a title",
-                description: "Add a description. It can be as long as you want."
+                description: "Add a description. It can be as long as you want.",
+                status: 0
             }
         }
     }
@@ -40,11 +42,23 @@ class AddEditTodo    extends Component {
             }
         } 
     }
+
+    handleSubmit = taskId => event => {
+        let todo = this.state.todo;
+        if(taskId == null) {
+           this.props.addTask(todo);
+        } else {
+            this.props.updateTask(todo);
+        }
+        this.props.history.push("/");
+    }
+
     render() {
         // console.log("add edit", this.props)
         const {todo} = this.state;
         const taskId = this.props.match.params.taskId;
 
+        console.log(">>> ", this.props)
         return (
             <div className="row">
                 <div className="col-md-7  p-t-50">
@@ -75,10 +89,10 @@ class AddEditTodo    extends Component {
                     </div>
                     <div className="row m-bt-10">
                         <div className="col-12">
-                        <Button  variant="contained" color="primary" style={{marginRight: 10}}> { !!taskId ? "Update" : "Add"}</Button>
-                        <Button variant="outlined">
-                           <Link to="/"> Cancel</Link>
-                        </Button>
+                        <Button onClick={this.handleSubmit(taskId)} variant="contained" color="primary" style={{marginRight: 10}}> { !!taskId ? "Update" : "Add"}</Button>
+                        
+                           <Link className="no-text-decoration" to="/"><Button variant="outlined"> Cancel</Button></Link>
+                        
                         </div>
                     </div>
 
@@ -88,7 +102,7 @@ class AddEditTodo    extends Component {
                     </div>
                     <div className="row">
                         <div className="col-12">
-                            <Todo todo={todo} demo={true}/>
+                            <Todo todo={todo} demo={true} deleteTodo ={() => {}} updateToDo={() => {}}/>
                         </div>
                     </div>
 
@@ -97,7 +111,11 @@ class AddEditTodo    extends Component {
         );
     }
 }
+const mapDispatchToProps = dispatch => ({
+  addTask: (task) => dispatch(addTask(task)),
+  updateTask: (task) => dispatch(updateTask(task))
+})
 const mapStateToProps = state => ({
     todos: state.tasks.todos
 })
-module.exports =  connect(mapStateToProps)(AddEditTodo);
+module.exports =  withRouter(connect(mapStateToProps, mapDispatchToProps)(AddEditTodo));

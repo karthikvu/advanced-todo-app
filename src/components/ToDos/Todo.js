@@ -58,7 +58,7 @@ class ToDo extends Component {
                             open={open}
                             onClose={this.handleClose}
                             >
-                                <Link to={"/edit/" + todo.id}>
+                                <Link  className="no-text-decoration" to={"/edit/" + todo.id}>
                             <MenuItem onClick={this.handleClose}>
                                     <ListItemIcon>
                                         <EditIcon />

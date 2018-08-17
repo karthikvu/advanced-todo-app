@@ -3,7 +3,9 @@ import { Switch, Route , Link} from 'react-router-dom'
 import Login from "./Login/Login";
 import ToDos from "./ToDos/ToDos";
 import AddEditTodo from "./AddEditTodo/AddEditTodo";
-
+import IconButton from '@material-ui/core/IconButton';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import AppBar from "./AppBar";
 class AppContainer extends Component {
     constructor(props) {
         super(props);
@@ -12,15 +14,9 @@ class AppContainer extends Component {
     render() { 
         return (
             <div>
-               <div className="header">
-               </div> 
-               <div className="container m-t-header">
-               {/* <Switch>
-                    <Route exact path='/' component={AddEditTodo}/>
-                    <Route exact path='/create' component={AddEditTodo}/>
-                    <Route exact path='/edit' component={AddEditTodo}/>
-                </Switch> */}
-                {this.props.children}
+               <AppBar />
+               <div className="container todo-container">
+                 {this.props.children}
                 </div>
             </div>
          );

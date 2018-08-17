@@ -6,13 +6,16 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Todo from "./Todo"
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { Link , withRouter } from "react-router-dom";
+
 
 import { updateTask, deleteTask } from "../../actions/taskActions";
 class ToDoList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            anchorEl: null
+            anchorEl: null,
+            filter: "0,1"
         };
     }
 
@@ -29,9 +32,18 @@ class ToDoList extends Component {
     deleteTodo = (todo) => {
         this.props.deleteTask(todo);
     }
+    setFilter = filter => event => {
+        this.setState({
+            filter
+        })
+        this.handleClose();
+    } 
     render() {
         const {todos, session} = this.props;
-        const {anchorEl} = this.state;
+        const {anchorEl, filter} = this.state;
+        const isManager = session.user.role === roles.MANAGER;
+        const filterVal = filter.split(",").map(Number);
+        let filtered = todos.filter(todo => filterVal.indexOf(todo.status) > -1 );
         return (
             <div>
                 <div className="row m-bt-10">
@@ -44,25 +56,30 @@ class ToDoList extends Component {
                             ? 'simple-menu'
                             : null}
                             aria-haspopup="true"
+                            variant="outlined"
+                            //the material components are not aligned
+                            style={{marginTop: 4}}
                             onClick={this.handleClick}>
                             <FilterListIcon style={{ marginRight: 10, fontSize: 20}} />
                             Filter
                         </Button>
+                        
                         <Menu
                             id="simple-menu"
                             anchorEl={anchorEl}
                             open={Boolean(anchorEl)}
                             onClose={this.handleClose}>
-                            <MenuItem onClick={this.handleClose}>All</MenuItem>
-                            <MenuItem onClick={this.handleClose}>Incomplete</MenuItem>
-                            <MenuItem onClick={this.handleClose}>Complete</MenuItem>
+                            <MenuItem selected={filter == "0,1"} onClick={this.setFilter("0,1")}>All</MenuItem>
+                            <MenuItem selected={filter == "0"} onClick={this.setFilter("0")}>Incomplete</MenuItem>
+                            <MenuItem selected={filter == "1"} onClick={this.setFilter("1")}>Complete</MenuItem>
                         </Menu>
+                        {isManager && <Link className="no-text-decoration" to="/create" style={{marginLeft: 10 }}><Button variant="contained" color="primary"> Add New</Button></Link>}
                     </div>
                 </div>
                 <div className="row">
-                    {todos.map((todo, index) => <div className="col-md-6 col-lg-4 m-bt-10" key={index}>
+                    {filtered.map((todo, index) => <div className="col-md-6 col-lg-4 m-bt-10" key={index}>
                         <Todo todo={todo} 
-                            isManager={session.user.role === roles.MANAGER} 
+                            isManager={isManager} 
                             updateToDo={this.updateToDo}
                             deleteTodo={this.deleteTodo}/>
                     </div>)}

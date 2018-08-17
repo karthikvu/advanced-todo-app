@@ -8,11 +8,10 @@ export default function withAuth(WrappedComponent, allowedRoles) {
         render() {
         console.log("container : ", this.props, allowedRoles)
         const user = this.props.session.user;
-        const isAllowed = allowedRoles.indexOf(user.role) > -1;
-        console.log(">>> isAllowed", isAllowed)
         if(!user){
             return <Redirect to="/login" />;
         } else {
+            const isAllowed = allowedRoles.indexOf(user.role) > -1;
             return isAllowed ? <WrappedComponent {...this.props}/> : <Redirect to="/" />;
         }
       }
