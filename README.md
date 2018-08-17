@@ -27,6 +27,7 @@ You can now access the application on the url http://localhost:8080
 **Credentials**
 
 For Manager : manager / manager
+
 For Employee : employee / employee
 
 
