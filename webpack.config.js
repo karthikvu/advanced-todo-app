@@ -7,7 +7,7 @@ const config = {
     devServer: {
         contentBase: ['./public/', './src/'],
         inline: true, 
-        port: 8080 
+        port: process.env.PORT || 8080 
     },
     module: {
         rules: [{
